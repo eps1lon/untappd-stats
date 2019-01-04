@@ -1,0 +1,8 @@
+{
+  "name": "untappd-stats",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "git@github.com:eps1lon/untappd-stats.git",
+  "author": "Sebastian Silbermann <silbermann.sebastian@gmail.com>",
+  "license": "MIT"
+}
