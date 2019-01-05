@@ -1,4 +1,4 @@
-import { User } from "../untappd/api/schema";
+import { UserBeersItem } from "../untappd/api/schema";
 
 export interface Filter {
   beerStyles: string[];
@@ -10,13 +10,13 @@ export type Result = Array<{
 }>;
 
 /**
- * given a list of entries from User.Beers
+ * given a list of entries from UserBeers
  * calculate the relative percentage of a given rating according to the filter
  * @param param0
  * @param filter
  */
 export default function processRatings(
-  { items }: User.Beers,
+  items: UserBeersItem[],
   filter: Filter,
 ): Result {
   const consideredItems = filterItems(items, {
@@ -52,8 +52,8 @@ interface FilterItemsFilter {
   beerStyles: Set<string>;
 }
 function filterItems(
-  items: User.Beers["items"],
+  items: UserBeersItem[],
   filter: FilterItemsFilter,
-): User.Beers["items"] {
+): UserBeersItem[] {
   return items.filter((item) => filter.beerStyles.has(item.beer.beer_style));
 }

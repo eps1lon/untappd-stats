@@ -11,11 +11,8 @@ import { Link } from "react-router-dom";
 import processRatings from "./processRatings";
 import Ratings from "./Ratings";
 import RatingsFilter, { useFilter } from "../RatingsFilter";
-import { User as UserSchema } from "../untappd/api/schema";
-
-const userBeers: UserSchema.Beers = {
-  items: require("./MOCK_DATA.json"),
-};
+import { schema, useApi } from "../untappd/api";
+import { LoadingState } from "../untappd/api/useApi";
 
 const styles = createStyles({
   root: {},
@@ -30,7 +27,10 @@ export interface Props extends WithStyles<typeof styles> {
 function User(props: Props) {
   const { name } = props;
   const classes = useClasses(props);
+
   const filter = useFilter();
+  const [userBeers, loadingState] = useUserBeers(name);
+
   const ratings = React.useMemo(() => processRatings(userBeers, filter), [
     filter,
   ]);
@@ -41,10 +41,38 @@ function User(props: Props) {
         <Typography>Look at another user</Typography>
       </Link>
       <Typography variant="h6">{name}</Typography>
-      <RatingsFilter />
-      <Ratings ratings={ratings} width={800} height={300} />
+      <RequestFallback state={loadingState}>
+        <RatingsFilter />
+        <Ratings ratings={ratings} width={800} height={300} />
+      </RequestFallback>
     </div>
   );
+}
+
+interface RequestFallbackProps {
+  children?: React.ReactNode;
+  state: LoadingState;
+}
+function RequestFallback(props: RequestFallbackProps) {
+  const { children, state } = props;
+
+  if (state === "done") {
+    return <>{children}</>;
+  }
+
+  const message = state === "error" ? "NotFound" : "Loading";
+  return <Typography variant="subtitle1">{message}</Typography>;
+}
+
+function useUserBeers(name: string): [schema.UserBeersItem[], LoadingState] {
+  const [userBeers, loadingState] = useApi<schema.UserBeers>(
+    `user/beers/${name}.json`,
+  );
+  if (userBeers == null) {
+    return [[], loadingState];
+  }
+
+  return [userBeers.beers.items, loadingState];
 }
 
 export default withStyles(styles)(User);
