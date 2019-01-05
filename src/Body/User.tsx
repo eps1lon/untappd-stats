@@ -6,6 +6,7 @@ import {
   WithStyles,
 } from "@material-ui/styles";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import processRatings from "./processRatings";
 import Ratings from "./Ratings";
@@ -36,6 +37,9 @@ function User(props: Props) {
 
   return (
     <div className={classes.root}>
+      <Link to="/">
+        <Typography>Look at another user</Typography>
+      </Link>
       <Typography variant="h6">{name}</Typography>
       <RatingsFilter />
       <Ratings ratings={ratings} width={800} height={300} />
