@@ -1,4 +1,4 @@
-import { Snackbar } from "@material-ui/core";
+import { Divider, Snackbar } from "@material-ui/core";
 import React from "react";
 
 import BeerStyles from "./BeerStyles";
@@ -41,12 +41,14 @@ function BeerFilter(props: Props) {
   return (
     <>
       <Snackbar open={errorMessage != null}>{errorMessage}</Snackbar>
+      <Divider />
       <BeerStyles
         availableStyles={allBeerStyles}
         isLoading={loading}
         onChange={handleChange}
         selectedStyles={beerStyles}
       />
+      <Divider />
     </>
   );
 }
