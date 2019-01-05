@@ -9,7 +9,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import processRatings from "./processRatings";
-import Ratings from "./Ratings";
+import Ratings from "../Ratings";
 import RatingsFilter, { useFilter } from "../RatingsFilter";
 import { schema, useApi } from "../untappd/api";
 import { LoadingState } from "../untappd/api/useApi";

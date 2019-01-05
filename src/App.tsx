@@ -1,6 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Header from "./Header";
 import Body from "./Body";
@@ -14,10 +15,12 @@ function App() {
   return (
     <Context.Provider value={context}>
       <ThemeProvider theme={theme}>
-        <main>
-          <Header />
-          <Body />
-        </main>
+        <Router>
+          <main>
+            <Header />
+            <Body />
+          </main>
+        </Router>
       </ThemeProvider>
     </Context.Provider>
   );
