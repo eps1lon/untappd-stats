@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const Home = React.lazy(() => import("./Search"));
-const Stats = React.lazy(() => import("./User"));
+const Stats = React.lazy(() => import("./Stats"));
 
 function Body() {
   return (
