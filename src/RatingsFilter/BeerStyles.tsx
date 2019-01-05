@@ -25,8 +25,9 @@ import { SelectComponentsConfig } from "react-select/lib/components";
 export type BeerStyle = string;
 export interface Props {
   availableStyles: BeerStyle[];
-  selectedStyles: BeerStyle[];
+  isLoading?: boolean;
   onChange: (beerStyles: BeerStyle[]) => void;
+  selectedStyles: BeerStyle[];
 }
 
 type Option = { value: string; label: string };
@@ -105,7 +106,7 @@ function beerStylesToOptions(beerStyles: BeerStyle[]): Option[] {
 }
 
 function BeerStyles(props: Props) {
-  const { availableStyles, onChange, selectedStyles } = props;
+  const { availableStyles, isLoading, onChange, selectedStyles } = props;
 
   const classes = useClasses();
   const theme = useTheme<Theme>();
@@ -143,6 +144,7 @@ function BeerStyles(props: Props) {
   return (
     // @ts-ignore
     <Select<Option>
+      isLoading={isLoading}
       styles={selectStyles}
       textFieldProps={{
         label: "Label",
