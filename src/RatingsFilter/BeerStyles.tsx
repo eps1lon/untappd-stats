@@ -147,7 +147,7 @@ function BeerStyles(props: Props) {
       isLoading={isLoading}
       styles={selectStyles}
       textFieldProps={{
-        label: "Label",
+        label: "Beer Styles",
         InputLabelProps: {
           shrink: true,
         },

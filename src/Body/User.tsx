@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import {
   createStyles,
   makeStyles,
@@ -35,7 +36,7 @@ function User(props: Props) {
 
   return (
     <div className={classes.root}>
-      {name}
+      <Typography variant="h6">{name}</Typography>
       <RatingsFilter />
       <Ratings ratings={ratings} width={800} height={300} />
     </div>
