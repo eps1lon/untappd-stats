@@ -1,10 +1,6 @@
-import { Typography } from "@material-ui/core";
-import {
-  createStyles,
-  makeStyles,
-  withStyles,
-  WithStyles,
-} from "@material-ui/styles";
+import { Paper, Typography } from "@material-ui/core";
+import { Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/styles";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -15,13 +11,18 @@ import { schema, useApi } from "../untappd/api";
 import { LoadingState } from "../untappd/api/useApi";
 import useDocumentTitle from "../useDocumentTitle";
 
-const styles = createStyles({
-  root: {},
-  input: {},
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {},
+    input: {},
+    paper: {
+      padding: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+  });
 const useClasses = makeStyles(styles);
 
-export interface Props extends WithStyles<typeof styles> {
+export interface Props {
   name: string;
 }
 
@@ -50,12 +51,14 @@ function User(props: Props) {
 
   return (
     <div className={classes.root}>
-      <Link to="/">
-        <Typography>Look at another user</Typography>
-      </Link>
-      <Typography variant="h6">
-        User <em>{name}</em>
-      </Typography>
+      <Paper className={classes.paper}>
+        <Link to="/">
+          <Typography>Look at another user</Typography>
+        </Link>
+        <Typography variant="h6">
+          User <em>{name}</em>
+        </Typography>
+      </Paper>
       <RequestFallback state={loadingState}>
         <RatingsFilter beerStyles={ratedStyles} />
         <Ratings ratings={ratings} width={800} height={300} />
@@ -94,4 +97,4 @@ function unique<T>(arr: T[]): T[] {
   return Array.from(new Set(arr));
 }
 
-export default withStyles(styles)(User);
+export default User;

@@ -1,4 +1,6 @@
-import { List, ListItem, Typography } from "@material-ui/core";
+import { List, ListItem, Paper, Typography } from "@material-ui/core";
+import { Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/styles";
 import { Bar } from "@vx/shape";
 import { Group } from "@vx/group";
 import { scaleBand, scaleLinear } from "@vx/scale";
@@ -11,6 +13,12 @@ export interface Props {
   width: number;
   ratings: Rating[];
 }
+
+const useClasses = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: { marginBottom: theme.spacing.unit, padding: theme.spacing.unit },
+  }),
+);
 
 interface Rating {
   frequency: number;
@@ -100,6 +108,8 @@ function Ratings(props: Props) {
     );
   }
 
+  const classes = useClasses();
+
   const yMax = height - marginTop;
 
   const xScale = useXScale(props);
@@ -110,7 +120,7 @@ function Ratings(props: Props) {
   const tally = ratings.length;
 
   return (
-    <div>
+    <Paper className={classes.paper}>
       <Typography variant="subtitle1">Summary</Typography>
       <List dense>
         <ListItem>{tally} different scores</ListItem>
@@ -141,7 +151,7 @@ function Ratings(props: Props) {
           })}
         </Group>
       </svg>
-    </div>
+    </Paper>
   );
 }
 
