@@ -3,6 +3,8 @@ import { createStyles, makeStyles } from "@material-ui/styles";
 import React from "react";
 import { RouterProps } from "react-router";
 
+import useDocumentTitle from "../useDocumentTitle";
+
 const styles = createStyles({
   root: {},
   input: {},
@@ -13,7 +15,10 @@ export interface Props extends RouterProps {}
 
 function Landing(props: Props) {
   const { history } = props;
+  useDocumentTitle("untappd-stats");
+
   const classes = useClasses(props);
+
   const [name, setName] = React.useState("");
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

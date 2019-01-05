@@ -13,6 +13,7 @@ import Ratings from "./Ratings";
 import RatingsFilter, { useFilter } from "../RatingsFilter";
 import { schema, useApi } from "../untappd/api";
 import { LoadingState } from "../untappd/api/useApi";
+import useDocumentTitle from "../useDocumentTitle";
 
 const styles = createStyles({
   root: {},
@@ -27,6 +28,8 @@ export interface Props extends WithStyles<typeof styles> {
 function User(props: Props) {
   const { name } = props;
   const classes = useClasses(props);
+
+  useDocumentTitle(`${name} | untappd-stats`);
 
   const filter = useFilter();
   const [userBeers, loadingState] = useUserBeers(name);
