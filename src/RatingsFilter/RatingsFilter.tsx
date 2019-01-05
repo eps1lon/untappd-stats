@@ -4,32 +4,14 @@ import React from "react";
 import BeerStyles from "./BeerStyles";
 import Context from "./Context";
 
-export interface Props {}
+export interface Props {
+  beerStyles: string[];
+}
 
 function BeerFilter(props: Props) {
-  const [loading, setLoading] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
-  const [allBeerStyles, setAllBeerStyles] = React.useState<string[]>([]);
-  React.useEffect(() => {
-    fetch("/beer-styles.json")
-      .then((response) => response.json())
-      .then((json) => {
-        if (Array.isArray(json) && typeof json[0] === "string") {
-          setAllBeerStyles(json);
-        } else {
-          throw new TypeError(`json response didnt match string[]`);
-        }
-      })
-      .catch((err) => {
-        setErrorMessage(String(err));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { beerStyles } = props;
 
   const { filter, setFilter } = React.useContext(Context);
-  const { beerStyles } = filter;
 
   const handleChange = React.useCallback(
     (beerStyles: string[]) => {
@@ -40,13 +22,11 @@ function BeerFilter(props: Props) {
 
   return (
     <>
-      <Snackbar open={errorMessage != null}>{errorMessage}</Snackbar>
       <Divider />
       <BeerStyles
-        availableStyles={allBeerStyles}
-        isLoading={loading}
+        availableStyles={beerStyles}
         onChange={handleChange}
-        selectedStyles={beerStyles}
+        selectedStyles={filter.beerStyles}
       />
       <Divider />
     </>

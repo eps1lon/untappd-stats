@@ -37,15 +37,27 @@ function User(props: Props) {
   const ratings = React.useMemo(() => processRatings(userBeers, filter), [
     filter,
   ]);
+  const ratedStyles = React.useMemo(
+    () => {
+      return unique(
+        userBeers.map(({ beer: { beer_style } }) => {
+          return beer_style;
+        }),
+      );
+    },
+    [userBeers],
+  );
 
   return (
     <div className={classes.root}>
       <Link to="/">
         <Typography>Look at another user</Typography>
       </Link>
-      <Typography variant="h6">User <em>{name}</em></Typography>
+      <Typography variant="h6">
+        User <em>{name}</em>
+      </Typography>
       <RequestFallback state={loadingState}>
-        <RatingsFilter />
+        <RatingsFilter beerStyles={ratedStyles} />
         <Ratings ratings={ratings} width={800} height={300} />
       </RequestFallback>
     </div>
@@ -76,6 +88,10 @@ function useUserBeers(name: string): [schema.UserBeersItem[], LoadingState] {
   }
 
   return [userBeers.beers.items, loadingState];
+}
+
+function unique<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr));
 }
 
 export default withStyles(styles)(User);
