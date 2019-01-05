@@ -1,6 +1,6 @@
-import { Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
 import React from "react";
 
+import BeerStyles from "./BeerStyles";
 import Context from "./Context";
 
 const allBeerStyles = [
@@ -16,44 +16,19 @@ function BeerFilter(props: Props) {
   const { filter, setFilter } = React.useContext(Context);
   const { beerStyles } = filter;
 
-  const createHandleCheckboxClick = (beerStyle: string) => (
-    event: React.ChangeEvent<{}>,
-  ) => {
-    const { target } = event;
-    if (!(target instanceof HTMLInputElement)) {
-      throw new Error(
-        "handleCheckboxClick was not passed to an HTMLInputElement",
-      );
-    }
-
-    if (target.checked && beerStyles.indexOf(beerStyle) === -1) {
-      setFilter({ ...filter, beerStyles: beerStyles.concat(beerStyle) });
-    } else if (!target.checked) {
-      setFilter({
-        ...filter,
-        beerStyles: beerStyles.filter(
-          (existingStyle) => existingStyle !== beerStyle,
-        ),
-      });
-    }
-  };
+  const handleChange = React.useCallback(
+    (beerStyles: string[]) => {
+      setFilter({ ...filter, beerStyles });
+    },
+    [filter, setFilter],
+  );
 
   return (
-    <FormGroup>
-      {allBeerStyles.map((beerStyle) => {
-        return (
-          <FormControlLabel
-            key={beerStyle}
-            control={
-              <Checkbox checked={beerStyles.indexOf(beerStyle) !== -1} />
-            }
-            label={beerStyle}
-            onChange={createHandleCheckboxClick(beerStyle)}
-            value={beerStyle}
-          />
-        );
-      })}
-    </FormGroup>
+    <BeerStyles
+      availableStyles={allBeerStyles}
+      onChange={handleChange}
+      selectedStyles={beerStyles}
+    />
   );
 }
 
