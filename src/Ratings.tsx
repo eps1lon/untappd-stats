@@ -1,3 +1,4 @@
+import { List, ListItem, Typography } from "@material-ui/core";
 import { Bar } from "@vx/shape";
 import { Group } from "@vx/group";
 import { scaleBand, scaleLinear } from "@vx/scale";
@@ -110,12 +111,14 @@ function Ratings(props: Props) {
 
   return (
     <div>
-      <section>
-        <p>{tally} different scores</p>
-        <p>Average: {average}</p>
-        <p>Median: {median}</p>
-        <p>Hovered Rating: {activeRating}</p>
-      </section>
+      <Typography variant="subtitle1">Summary</Typography>
+      <List dense>
+        <ListItem>{tally} different scores</ListItem>
+        <ListItem>Average: {average}</ListItem>
+        <ListItem>Median: {median}</ListItem>
+        <ListItem>Hovered Rating: {activeRating}</ListItem>
+      </List>
+      <Typography variant="subtitle1">Graph</Typography>
       <svg height={height + marginTop} width={width}>
         <Group top={marginTop}>
           {ratings.map((rating) => {

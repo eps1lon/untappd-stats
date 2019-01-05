@@ -43,7 +43,7 @@ function User(props: Props) {
       <Link to="/">
         <Typography>Look at another user</Typography>
       </Link>
-      <Typography variant="h6">{name}</Typography>
+      <Typography variant="h6">User <em>{name}</em></Typography>
       <RequestFallback state={loadingState}>
         <RatingsFilter />
         <Ratings ratings={ratings} width={800} height={300} />
